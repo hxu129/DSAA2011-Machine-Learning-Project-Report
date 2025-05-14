@@ -7,7 +7,7 @@
 
 
 % ready for submission
-\usepackage{neurips_2025}
+\usepackage[final]{neurips_2025}
 
 
 % to compile a preprint version, e.g., for submission to arXiv, add add the
@@ -29,12 +29,13 @@
 \usepackage{url}            % simple URL typesetting
 \usepackage{booktabs}       % professional-quality tables
 \usepackage{amsfonts}       % blackboard math symbols
+\usepackage{amsmath}
 \usepackage{nicefrac}       % compact symbols for 1/2, etc.
 \usepackage{microtype}      % microtypography
 \usepackage{xcolor}         % colors
 
 
-\title{Formatting Instructions For NeurIPS 2025}
+\title{Project Report \large \\ DSAA2011 Machine Learning}
 
 
 % The \author macro works with any number of authors. There are two commands
@@ -47,34 +48,18 @@
 
 
 \author{%
-  David S.~Hippocampus\thanks{Use footnote for providing further information
-    about author (webpage, alternative address)---\emph{not} for acknowledging
-    funding agencies.} \\
-  Department of Computer Science\\
-  Cranberry-Lemon University\\
-  Pittsburgh, PA 15213 \\
-  \texttt{hippo@cs.cranberry-lemon.edu} \\
   % examples of more authors
-  % \And
-  % Coauthor \\
-  % Affiliation \\
-  % Address \\
-  % \texttt{email} \\
-  % \AND
-  % Coauthor \\
-  % Affiliation \\
-  % Address \\
-  % \texttt{email} \\
-  % \And
-  % Coauthor \\
-  % Affiliation \\
-  % Address \\
-  % \texttt{email} \\
-  % \And
-  % Coauthor \\
-  % Affiliation \\
-  % Address \\
-  % \texttt{email} \\
+   Hua XU \\
+   HKUST(GZ) \\
+   \texttt{hxu401@connect.hkust-gz.edu.cn} \\
+   \And
+   Jianhao RUAN \\
+   HKUST(GZ) \\
+   \texttt{jruan189@connect.hkust-gz.edu.cn} \\
+   \And
+   Leyi WU \\
+   HKUST(GZ) \\
+   \texttt{lwu398@connect.hkust-gz.edu.cn} \\
 }
 
 
@@ -93,7 +78,7 @@
 \end{abstract}
 
 
-\section{Submission of papers to NeurIPS 2025}
+\section{Introduction}
 
 
 Please read the instructions below carefully and follow them faithfully.
@@ -167,8 +152,42 @@ The formatting instructions contained in these style files are summarized in
 Sections \ref{gen_inst}, \ref{headings}, and \ref{others} below.
 
 
-\section{General formatting instructions}
-\label{gen_inst}
+\section{Preliminary}
+\label{preliminary}
+
+\subsection{Notations}
+
+
+\subsection{Dimensionality reduction}
+
+
+\subsection{Clustering}
+
+\paragraph{K-means} K-means is a classic clustering algorithm, which iteratively calculates the distance between sample points and the centroids of the cluster. The algorithm can be divided into \textbf{assignment step} and \textbf{update step}, as the assignment step assigns each data point $x_i$ from the dataset $X$ to the closest cluster centroid $\mu_i$ using the formula $r_i = \underset{k\in \{1\ldots K\} }{\arg\min}{ \|x_{i}-\mu_k\| }$. The centroids will then be updated during the
+update step, as each of the centroid of the cluster will be updated with the formula $\mu_k = \frac{\sum_{i:r_i=k}^{} x_i}{\sum_{i:r_i=k}^{} 1}$. In this method, the choose of the initial centroids is very important and therefore here we uses the \textbf{k-means++} initialization, which choose the first center randomly from the data points and for each remaining point, compute its squared distances to the nearest existing center. After that we choose another centroid with
+probability proportional to the squared distance. Then we repeat the process until $K$ centers are chosen. This can reduce sensitivity to poor initialization, theoretically guarantees $O(\log K)$-competitive solutions.
+
+\paragraph{Agglomerative clustering} Agglomerative clustering is a bottom-up approach which starts with each data point as a single cluster and merges the closest pairs of clusters iteratively. It will continue the process until one cluster remains. In this method, the way to measure the distance between the clusters will affect the performance of clustering methods, and we may have for different ways: 1) single linkage, which uses minimum pairwise distance; 2) complete linkage,
+which uses maximum pairwise distance; 3) average linkage, which uses average of all pairwise distances; 4) wardd's method, which aims at minimizing within-cluster sum of squares measured by the costs of merging cluster $A$ and $B$: $\Delta(A, B)=\frac{2n_An_b}{n_A+n_B}\|\mu_A-\mu_B\|^2$.
+
+
+
+
+
+
+\subsection{Ensemble models}
+
+
+
+
+\paragraph{Random forest}
+
+
+
+
+\paragraph{XGBoost}
+
+
 
 
 The text must be confined within a rectangle 5.5~inches (33~picas) wide and
@@ -197,7 +216,7 @@ Please pay special attention to the instructions in Section \ref{others}
 regarding figures, tables, acknowledgments, and references.
 
 
-\section{Headings: first level}
+\section{Methods}
 \label{headings}
 
 
@@ -228,7 +247,7 @@ bold, flush left, and inline with the text, with the heading followed by 1\,em
 of space.
 
 
-\section{Citations, figures, tables, references}
+\section{Experiments}
 \label{others}
 
 
@@ -366,7 +385,7 @@ fit into, and do not change font sizes (except perhaps in the
 numbered.
 
 
-\section{Preparing PDF files}
+\section{Results}
 
 
 Please prepare submission files with paper size ``US Letter,'' and not, for
@@ -435,16 +454,6 @@ See Section 4.4 in the graphics bundle documentation
 A number of width problems arise when \LaTeX{} cannot properly hyphenate a
 line. Please give LaTeX hyphenation hints using the \verb+\-+ command when
 necessary.
-
-\begin{ack}
-Use unnumbered first level headings for the acknowledgments. All acknowledgments
-go at the end of the paper before the list of references. Moreover, you are required to declare
-funding (financial activities supporting the submitted work) and competing interests (related financial activities outside the submitted work).
-More information about this disclosure can be found at: \url{https://neurips.cc/Conferences/2025/PaperInformation/FundingDisclosure}.
-
-
-Do {\bf not} include this section in the anonymized submission, only in the final paper. You can use the \texttt{ack} environment provided in the style file to automatically hide this section in the anonymized submission.
-\end{ack}
 
 \section*{References}
 
