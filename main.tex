@@ -70,11 +70,10 @@
 
 
 \begin{abstract}
-  The abstract paragraph should be indented \nicefrac{1}{2}~inch (3~picas) on
-  both the left- and right-hand margins. Use 10~point type, with a vertical
-  spacing (leading) of 11~points.  The word \textbf{Abstract} must be centered,
-  bold, and in point size 12. Two line spaces precede the abstract. The abstract
-  must be limited to one paragraph.
+    In the field of machine learning research and its applications, tabular data is always a great focus of people where they try to develop useful frameworks to perform multiple tasks like regression and classification, which is strongly related to the intrinsic characteristics of the data. In this project, we try to explore the characteristics of the \textbf{Adult Income} dataset with visualization methods like t-SNE and explore the potential of tree based ensemble models in
+    performing classification tasks on the dataset.
+
+    In the end of the project, we then found that xxxxx.
 \end{abstract}
 
 
@@ -168,7 +167,7 @@ update step, as each of the centroid of the cluster will be updated with the for
 probability proportional to the squared distance. Then we repeat the process until $K$ centers are chosen. This can reduce sensitivity to poor initialization, theoretically guarantees $O(\log K)$-competitive solutions.
 
 \paragraph{Agglomerative clustering} Agglomerative clustering is a bottom-up approach which starts with each data point as a single cluster and merges the closest pairs of clusters iteratively. It will continue the process until one cluster remains. In this method, the way to measure the distance between the clusters will affect the performance of clustering methods, and we may have for different ways: 1) single linkage, which uses minimum pairwise distance; 2) complete linkage,
-which uses maximum pairwise distance; 3) average linkage, which uses average of all pairwise distances; 4) wardd's method, which aims at minimizing within-cluster sum of squares measured by the costs of merging cluster $A$ and $B$: $\Delta(A, B)=\frac{2n_An_b}{n_A+n_B}\|\mu_A-\mu_B\|^2$.
+which uses maximum pairwise distance; 3) average linkage, which uses average of all pairwise distances; 4) wardd's method, which aims at minimizing within-cluster sum of squares measured by the costs of merging cluster $A$ and $B$: $\Delta(A, B)=\frac{2n_An_b}{n_A+n_B}\|\mu_A-\mu_B\|^2$ where $n_A, n_B$ means the number of elements in the corresponding clusters.
 
 
 
