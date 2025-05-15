@@ -129,14 +129,22 @@ Moreover, this also indicates that if we just directly use the t-SNE embedding t
 
 \subsubsection*{Methods}
 
-To further analyze the intrinsic characteristics of the data, we would like to perform clustering analysis. 
+Based on the t-SNE visualization, we have already observed the clustering characteristic within the data and we can perform clustering analysis to gain more insights. Here we are using K-means and agglomerative hierarchical clustering.
 
 \paragraph{K-means} K-means is a classic clustering algorithm, which iteratively calculates the distance between sample points and the centroids of the cluster. The algorithm can be divided into \textbf{assignment step} and \textbf{update step}, as the assignment step assigns each data point $x_i$ from the dataset $X$ to the closest cluster centroid $\mu_i$ using the formula $r_i = \underset{k\in \{1\ldots K\} }{\arg\min}{ \|x_{i}-\mu_k\| }$. The centroids will then be updated during the
 update step, as each of the centroid of the cluster will be updated with the formula $\mu_k = \frac{\sum_{i:r_i=k}^{} x_i}{\sum_{i:r_i=k}^{} 1}$. In this method, the choose of the initial centroids is very important and therefore here we uses the \textbf{k-means++} initialization, which choose the first center randomly from the data points and for each remaining point, compute its squared distances to the nearest existing center. After that we choose another centroid with
-probability proportional to the squared distance. Then we repeat the process until $K$ centers are chosen. This can reduce sensitivity to poor initialization, theoretically guarantees $O(\log K)$-competitive solutions.
+probability proportional to the squared distance. Then we repeat the process until $K$ centers are chosen. This can reduce sensitivity to poor initialization, theoretically guarantees $O(\log K)$-competitive solutions. We implement this method in Python with \texttt{KMeans} in scikit-learn.
 
 \paragraph{Agglomerative clustering} Agglomerative clustering is a bottom-up approach which starts with each data point as a single cluster and merges the closest pairs of clusters iteratively. It will continue the process until one cluster remains. In this method, the way to measure the distance between the clusters will affect the performance of clustering methods, and we may have for different ways: 1) single linkage, which uses minimum pairwise distance; 2) complete linkage,
-which uses maximum pairwise distance; 3) average linkage, which uses average of all pairwise distances; 4) wardd's method, which aims at minimizing within-cluster sum of squares measured by the costs of merging cluster $A$ and $B$: $\Delta(A, B)=\frac{2n_An_b}{n_A+n_B}\|\mu_A-\mu_B\|^2$ where $n_A, n_B$ means the number of elements in the corresponding clusters.
+which uses maximum pairwise distance; 3) average linkage, which uses average of all pairwise distances; 4) wardd's method, which aims at minimizing within-cluster sum of squares measured by the costs of merging cluster $A$ and $B$: $\Delta(A, B)=\frac{2n_An_b}{n_A+n_B}\|\mu_A-\mu_B\|^2$ where $n_A, n_B$ means the number of elements in the corresponding clusters. We implement this method in Python with \texttt{AgglomerativeClustering} in scikit-learn.
+
+For these two methods, k-means is the most classic clustering methods which can act as a \underline{baseline} and since it is fast, it can quickly bring us more insights on the clustering analysis. And since we have already see sub-clusters in the t-SNE analysis, we may try to use hierarchical clustering for more precisely capturing the locality of small sub-clusters.
+
+\subsubsection*{Results}
+
+The clustering results is visualized in \underline{Fig} and we have used some methods to evaluate the performance of the clustering.
+
+\underline{add a table here for performance comparison}
 
 \subsection{Prediction: training and testing}
 
@@ -151,7 +159,19 @@ which uses maximum pairwise distance; 3) average linkage, which uses average of 
 
 \underline{logistic regression and decision tree classifier}
 
-Based on the t-SNE visualization we may see that we may be unable to find a continuous line or a surface in the embedding space to separate the samples apart, which makes the logistic regression model not suitable in this scenario as it can only create a continuous decision boundary. Hence, here we choose the decision tree models which can create a more complex shape of the decision boundary.
+\subsubsection*{Methods}
+
+Based on the t-SNE visualization we may see that it is very hard to find a continuous line or surface to separate the samples from the two different classes apart. 
+Therefore, as for prediction, we would like to use decision tree based models and logistic regressions, as the decision tree based models may create discrete decision boundaries while logistic regression may bring us a \underline{curly} decision boundary, making the classification precise.
+
+\paragraph{Logistic regression} Logistic regressions 123456.
+
+\paragraph{Decision trees} Decision trees 123456.
+
+\subsubsection*{Results}
+
+After fitting the model with the train data, we then get the trained model.
+
 
 \subsection{Evaluation and choice of prediction model}
 
