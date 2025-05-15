@@ -170,13 +170,44 @@ Therefore, as for prediction, we would like to use decision tree based models an
 
 \subsubsection*{Results}
 
-After fitting the model with the train data, we then get the trained model.
+After fitting the model with the train data, we then get the trained model and the corresponding decision boundary is also visualized in the \underline{figure}. From the figure we can see that the decision tree model is more expressive, as it can bring us multiple decision areas and decision boundaries while the logistic regression model cannot handle the complex data distribution and its decision boundary and the decision boundary just go cross some of the samples. 
 
+This intuition implied by the visualizatoin is also supported by the metrics. From the table \underline{below} we can see that as for the overall performance. 
 
-\subsection{Evaluation and choice of prediction model}
+\underline{interpretion of results}
+
+However, it is quite clear that the performance is still not amazingly great, as the accuracy is just around \underline{1234} which is far below the legend of tree based models. Since we think the power of tree models is from its ability to create flexible decision areas, we think that adding the depth of the trees or increasing the number of trees in the process of fitting may be a good idea. We then increase the depth of a single decision tree to \underline{1245} and did more experiments,
+while we used the ensemble models to do more experiments. Their decision boundary are visualized in \underline{figure xxx} and the performance metrics are in \underline{table xxx}. Based on the results above, we may see that the ability of classification does increase as the tree goes deeper, 
+\underline{(but as the tree goes too deep, the performance on the test set will decrease as the model start to overfit)}. 
+And for the decision boundaries, we can see that the two models can bring us more complex but robust decision boundaries.
+
+Also, we may see the importance of features for further support on our conclusion and the results can be referred to in \underline{fig xxx}. For the best performance model XGBoost, we can see that the importance of features is significantly imbalanced as the \underline{xxxxx} matters most while the model pays little attention on the other features. For the vanilla decision tree model and the random forest model, they pay attention to more features but result in worse performance. This
+interesting discover align with the mechanism of XGBoost and the rest, as the gradient boosting model will try to learn from its failures and may be more able to learn the features which can make it away from error, while the random forest or the vanilla decision models will pay equal attention on all of the features and will be more likely affected by noises. This fact also aligns to our t-SNE visualization in \underline{figure} as it clearly shows the existence of noisy features and
+only a few of features really matters.
+
+Meanwhile, the performance on one class is significantly worse than another class, which may due to the not balanced distribution in the train data.
+
+\subsubsection*{Model selection}
+
+After fitting the models, we can select the model to use by analyzing their performance. The classification results are illustrated in \underline{table xxxxxxx} and based on that, we can calculate the ROC and AUC in \underline{fig xxx}. It shows that model \underline{xxxx} has the greatest AUC and it can balance well on the data
 
 
 \section{Conclusion}
+
+In this project, we try to explore the intrinsic characteristics of the Adult Income dataset and try to perform classification tasks with different models on it. Through our analysis, we find that the dataset contains a lot of redundant features which do not help the task too much but still will be involved in the classification process, making the costs big and the performance bad. Only a few features matter. For better time efficiency, we firstly perform dimensionality reduction
+with t-SNE and found that the classes are hard to separate and there are some sub-clusters in the dataset. 
+
+\underline{then we visualized the dataset with clustering methods}
+
+Then we start to perform classification task on it. For the complex data distribution, logistic regression perform badly on the dataset as it cannot create flexible decision boundary. Tree based models performs good on the dataset, as the performance will increase as the trees get deeper. Ensemble models is the king on this task, among those the XGBoost is the good good winner, as which can learn from its failures and find the most important feature. However, the model still suffer from the
+imbalanced distribution of the two labels and in the future, more advanced techniques should be applied for better performance.
+
+\underline{we may need to find one or two papers to support our conclusion that only the specific feature is important on the dataset}
+
+
+
+
+
 \label{conclusion}
 
 \section*{References}
