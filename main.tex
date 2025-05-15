@@ -68,15 +68,6 @@
 
 \maketitle
 
-
-\begin{abstract}
-    In the field of machine learning research and its applications, tabular data is always a great focus of people where they try to develop useful frameworks to perform multiple tasks like regression and classification, which is strongly related to the intrinsic characteristics of the data. In this project, we try to explore the characteristics of the \textbf{Adult Income} dataset with visualization methods like t-SNE and explore the potential of tree based ensemble models in
-    performing classification tasks on the dataset.
-
-    In the end of the project, we then found that xxxxx.
-\end{abstract}
-
-
 \section{Introduction}
 
 
@@ -149,6 +140,75 @@ the paper with your own.
 
 The formatting instructions contained in these style files are summarized in
 Sections \ref{gen_inst}, \ref{headings}, and \ref{others} below.
+
+
+
+\section{Mandatory tasks}
+
+The whole project can be decomposed into several stages, including data preprocessing, data visualization, clustering analysis, prediction and model selection.
+
+\subsection{Data preprocessing}
+
+\begin{itemize}
+    \item \checkmark the applied methods;
+    \item \underline{observed patterns of dataset or insights}
+\end{itemize}
+
+The Adult Income datasets is a binary classification dataset with 14 usable variables, six of which are integer types while the rest eight variables are categorical. In this project, we are using different strategy to process the data.
+
+\begin{itemize}
+    \item As for the categorical variables, we firstly use the most frequent value to impute the missing values in the data, then we use one-hot encoding to convert the values into one-hot vectors. This step is implemented in Python with \texttt{OneHotEncoder} in scikit-learn.
+    \item As for the numeric variables, we use median values of the variables to replace the missing values, and for \underline{12455} we firstly normalize the data to $0$ mean and $1$ variance with \texttt{StandardScaler} in scikit-learn.
+\end{itemize}
+
+After imputing missing values and converting all features to numeric ones, we then get a wide dataframe with \underline{123456} features, making the computation costs high and taking much time in training and testing. For efficiency and visualization purposes, we then use t-SNE to reduce the dimensionality of the original data and get both the 2D and 3D embedding for future usages.
+
+\underline{justify why we should use t-sne in 3D: comparing the time and performance}
+
+\underline{put a table here to show the performance of t-SNE embedding}
+
+
+\subsection{Data visualization}
+
+\begin{itemize}
+    \item t-SNE projection plot
+    \item discussion of observed patterns or insights
+\end{itemize}
+
+With 2D and 3D t-SNE embedding, we would like to visualize the dataset and explore more information within the dataset. For the 2D visualization, the first thing we notice is that samples from two different classes are not very distinguishable as they fall in the same clusters with different labels. As for samples with income less than $50$K, they are spread over almost all the figure while the samples with income greater than $50$K tend to cluster on only one side of the
+figure, which indicates that the class $\le 50K$ is a more general, diverse class with samples from different distribution while for the class $>50K$. 
+
+If we take a closer look at the labels inside, we may see that there are different sub clusters.
+
+Moreover, this also indicates that most of the features in the original dataset may not be useful in terms of separating the samples apart and these features make the samples close to each other in the original feature space, and we may need to find the important ones.
+
+Moreover, this also indicates that if we just directly use the t-SNE embedding to perform future tasks, we may fail since we cannot separate the samples based on the embedding good enough.
+
+\subsection{Clustering analysis}
+
+\begin{itemize}
+    \item description of the two chosen algorithms and why they are selected
+    \item evaluation and interpretation of clustering results
+    \item visualization of the clusters
+    \item Comparison of algorithm performances
+\end{itemize}
+
+\subsection{Prediction: training and testing}
+
+\begin{itemize}
+    \item description of the chosen classification target, model classes and why they were selected
+    \item description of training process
+    \item visualization of the results (decision boundary)
+    \item evaluation process (confusion matrices)
+    \item interpretation of prediction results on all the sets
+    \item comparison of algorithm performances
+\end{itemize}
+
+\underline{logistic regression and decision tree classifier}
+
+Based on the t-SNE visualization we may see that we may be unable to find a continuous line or a surface in the embedding space to separate the samples apart, which makes the logistic regression model not suitable in this scenario as it can only create a continuous decision boundary. Hence, here we choose the decision tree models which can create a more complex shape of the decision boundary.
+
+\subsection{Evaluation and choice of prediction model}
 
 
 \section{Preliminary}
