@@ -75,15 +75,16 @@
 
 \section{Introduction}
 
+\underline{don't forget to finish this part}
 
-\section{Mandatory tasks}
 
-The whole project can be decomposed into several stages, including data preprocessing, data visualization, clustering analysis, prediction and model selection.
+\section{Methods and results}
+
+\underline{add an introductory sentence here}
 
 \subsection{Data preprocessing}
 
 \begin{itemize}
-    \item \checkmark the applied methods;
     \item \underline{observed patterns of dataset or insights}
 \end{itemize}
 
@@ -91,24 +92,17 @@ The Adult Income datasets is a binary classification dataset with 14 usable vari
 
 \begin{itemize}
     \item As for the categorical variables, we firstly use the most frequent value to impute the missing values in the data, then we use one-hot encoding to convert the values into one-hot vectors. This step is implemented in Python with \texttt{OneHotEncoder} in scikit-learn.
-    \item As for the numeric variables, we use median values of the variables to replace the missing values, and for \underline{12455} we firstly normalize the data to $0$ mean and $1$ variance with \texttt{StandardScaler} in scikit-learn.
+    \item As for the numeric variables, we use median values of the variables to replace the missing values, and after dealing with the missing values, we then normalize the data to $0$ mean and $1$ variance with \texttt{StandardScaler} in scikit-learn.
 \end{itemize}
 
-After imputing missing values and converting all features to numeric ones, we then get a wide dataframe with \underline{123456} features, making the computation costs high and taking much time in training and testing. For efficiency and visualization purposes, we then use t-SNE to reduce the dimensionality of the original data and get both the 2D and 3D embedding for future usages.
+After imputing missing values and converting all features to numeric ones, we then get a wide dataframe with 105 features, making the computation costs high and taking much time in training and testing. For efficiency and visualization purposes, we then use t-SNE to reduce the dimensionality of the original data and get both the 2D and 3D embedding for future usages.
 
 \input{assets/tab_tsne_performance}
 
 \underline{justify why we should use t-sne in 3D: comparing the time and performance}
 
-\underline{put a table here to show the performance of t-SNE embedding}
-
 
 \subsection{Data visualization}
-
-\begin{itemize}
-    \item t-SNE projection plot
-    \item discussion of observed patterns or insights
-\end{itemize}
 
 \underline{explicitly show the mis assigned labels and try to make the 3D graph more readable}
 
@@ -119,7 +113,7 @@ figure, which indicates that the class $\le 50K$ is a more general, diverse clas
 
 If we take a closer look at the labels inside, we may see that there are different sub clusters.
 
-Moreover, this also indicates that most of the features in the original dataset may not be useful in terms of separating the samples apart and these features make the samples close to each other in the original feature space, and we may need to find the important ones.
+Moreover, this also indicates that most of the features in the original dataset may not be useful in terms of separating the samples apart and these features make the samples close to each other in the original feature space, and we may need to find the important ones for better performance.
 
 Moreover, this also indicates that if we just directly use the t-SNE embedding to perform future tasks, we may fail since we cannot separate the samples based on the embedding good enough.
 
@@ -128,17 +122,6 @@ Moreover, this also indicates that if we just directly use the t-SNE embedding t
 \input{assets/tab_clustering_performance}
 
 \input{assets/fig_clustering}
-
-\begin{itemize}
-    \item description of the two chosen algorithms and why they are selected
-    \item evaluation and interpretation of clustering results
-    \item visualization of the clusters
-    \item Comparison of algorithm performances
-\end{itemize}
-
-\underline{try to make all the cluseters scrollable}
-
-\underline{show the misclassified clusters}
 
 \subsubsection*{Methods}
 
@@ -151,31 +134,28 @@ probability proportional to the squared distance. Then we repeat the process unt
 \paragraph{Agglomerative clustering} Agglomerative clustering is a bottom-up approach which starts with each data point as a single cluster and merges the closest pairs of clusters iteratively. It will continue the process until one cluster remains. In this method, the way to measure the distance between the clusters will affect the performance of clustering methods, and we may have for different ways: 1) single linkage, which uses minimum pairwise distance; 2) complete linkage,
 which uses maximum pairwise distance; 3) average linkage, which uses average of all pairwise distances; 4) wardd's method, which aims at minimizing within-cluster sum of squares measured by the costs of merging cluster $A$ and $B$: $\Delta(A, B)=\frac{2n_An_b}{n_A+n_B}\|\mu_A-\mu_B\|^2$ where $n_A, n_B$ means the number of elements in the corresponding clusters. We implement this method in Python with \texttt{AgglomerativeClustering} in scikit-learn.
 
-For these two methods, k-means is the most classic clustering methods which can act as a \underline{baseline} and since it is fast, it can quickly bring us more insights on the clustering analysis. And since we have already see sub-clusters in the t-SNE analysis, we may try to use hierarchical clustering for more precisely capturing the locality of small sub-clusters.
+For these two methods, k-means is the most classic clustering methods which can act as a \underline{baseline} and since it is fast, it can quickly bring us some insights on the clustering analysis. And since we have already see sub-clusters in the t-SNE analysis, we may try to use hierarchical clustering for more precisely capturing the locality of small sub-clusters.
 
 \subsubsection*{Results}
 
 The clustering results is visualized in \underline{Fig} and we have used some methods to evaluate the performance of the clustering.
 
-\underline{add a table here for performance comparison}
+\underline{need to analyze the results and tell which one is better in terms of performance}
+
+\underline{need to gain more insights from the clustering}
+
 
 \subsection{Prediction: training and testing}
 
-\begin{itemize}
-    \item description of the chosen classification target, model classes and why they were selected
-    \item description of training process
-    \item visualization of the results (decision boundary)
-    \item evaluation process (confusion matrices)
-    \item interpretation of prediction results on all the sets
-    \item comparison of algorithm performances
-\end{itemize}
+\underline{need to describe the chosen classification target, model classes and why they were selected}
 
-\underline{logistic regression and decision tree classifier}
+\underline{need to describe the training process}
+
 
 \subsubsection*{Methods}
 
 Based on the t-SNE visualization we may see that it is very hard to find a continuous line or surface to separate the samples from the two different classes apart. 
-Therefore, as for prediction, we would like to use decision tree based models and logistic regressions, as the decision tree based models may create discrete decision boundaries while logistic regression may bring us a \underline{curly} decision boundary, making the classification precise.
+Therefore, as for prediction, we would like to use decision tree based models and logistic regressions, as the decision tree based models may create discrete decision boundaries while logistic regression may bring us a simple decision boundary, making the classification precise.
 
 \paragraph{Logistic regression} Logistic regressions 123456.
 
@@ -206,6 +186,8 @@ interesting discovery align with the mechanism of XGBoost and the rest, as the g
 only a few of features really matters.
 
 Meanwhile, the performance on one class is significantly worse than another class, which may due to the not balanced distribution in the train data.
+
+\underline{check whether we have already explicitly compare the model performance}
 
 \subsubsection*{Model selection}
 
