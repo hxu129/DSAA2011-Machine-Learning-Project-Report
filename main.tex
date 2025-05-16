@@ -95,7 +95,7 @@ The Adult Income datasets is a binary classification dataset with 14 usable vari
     \item As for the numeric variables, we use median values of the variables to replace the missing values, and after dealing with the missing values, we then normalize the data to $0$ mean and $1$ variance with \texttt{StandardScaler} in scikit-learn.
 \end{itemize}
 
-After imputing missing values and converting all features to numeric ones, we then get a wide dataframe with 105 features, making the computation costs high and taking much time in training and testing. For efficiency and visualization purposes, we then use t-SNE to reduce the dimensionality of the original data and get both the 2D and 3D embedding for future usages.
+After imputing missing values and converting all features to numeric ones, we then get a wide dataframe with 105 features, making the computation costs high and taking much time in training and testing. For efficiency and visualization purposes, we then use t-SNE to reduce the dimensionality of the original data and get both the 2D and 3D embedding for future usages. Since then we would like to use 3D embedding for future usage since it can preserve more information based on the table.
 
 \input{assets/tab_tsne_performance}
 
@@ -121,25 +121,28 @@ The observed overlap between classes in the t-SNE embedding, while potentially i
 
 \subsubsection*{Methods}
 
-Based on the t-SNE visualization, we have already observed the clustering characteristic within the data and we can perform clustering analysis to gain more insights. Here we are using K-means and agglomerative hierarchical clustering.
+Observations from the t-SNE visualization suggested inherent clustering characteristics within the dataset. To further investigate these structures and gain deeper insights, a clustering analysis was performed using two distinct algorithms: K-means and agglomerative hierarchical clustering.
 
-\paragraph{K-means} K-means is a classic clustering algorithm, which iteratively calculates the distance between sample points and the centroids of the cluster. The algorithm can be divided into \textbf{assignment step} and \textbf{update step}, as the assignment step assigns each data point $x_i$ from the dataset $X$ to the closest cluster centroid $\mu_i$ using the formula $r_i = \underset{k\in \{1\ldots K\} }{\arg\min}{ \|x_{i}-\mu_k\| }$. The centroids will then be updated during the
-update step, as each of the centroid of the cluster will be updated with the formula $\mu_k = \frac{\sum_{i:r_i=k}^{} x_i}{\sum_{i:r_i=k}^{} 1}$. In this method, the choose of the initial centroids is very important and therefore here we uses the \textbf{k-means++} initialization, which choose the first center randomly from the data points and for each remaining point, compute its squared distances to the nearest existing center. After that we choose another centroid with
-probability proportional to the squared distance. Then we repeat the process until $K$ centers are chosen. This can reduce sensitivity to poor initialization, theoretically guarantees $O(\log K)$-competitive solutions. We implement this method in Python with \texttt{KMeans} in scikit-learn.
+\paragraph{K-means} K-means is a widely recognized partitional clustering algorithm that aims to partition N observations into K clusters. The algorithm operates iteratively through two main steps:
 
-\paragraph{Agglomerative clustering} Agglomerative clustering is a bottom-up approach which starts with each data point as a single cluster and merges the closest pairs of clusters iteratively. It will continue the process until one cluster remains. In this method, the way to measure the distance between the clusters will affect the performance of clustering methods, and we may have for different ways: 1) single linkage, which uses minimum pairwise distance; 2) complete linkage,
-which uses maximum pairwise distance; 3) average linkage, which uses average of all pairwise distances; 4) wardd's method, which aims at minimizing within-cluster sum of squares measured by the costs of merging cluster $A$ and $B$: $\Delta(A, B)=\frac{2n_An_b}{n_A+n_B}\|\mu_A-\mu_B\|^2$ where $n_A, n_B$ means the number of elements in the corresponding clusters. We implement this method in Python with \texttt{AgglomerativeClustering} in scikit-learn.
+\begin{enumerate}
+    \item \textbf{Assignment step:} Each data point xi from the dataset X is assigned to the cluster whose centroid $\mu_k$ is closest. This assignment is determined by the formula: $r_i = \underset{k\in \{1\ldots K\} }{\arg\min}{ \|x_{i}-\mu_k\| }$.
+    \item \textbf{Update step:} After all points are assigned to clusters, the centroid of each cluster is recalculated as the mean of all points assigned to it: $\mu_k = \frac{\sum_{i:r_i=k}^{} x_i}{\sum_{i:r_i=k}^{} 1}$. The quality of the initial centroid selection significantly impacts K-means performance. Therefore, the \textbf{k-means++} initialization technique was employed. This method selects the first centroid randomly from the data points. Subsequent centroids are chosen from the remaining data points with a probability proportional to their squared distance from the nearest existing centroid, repeating until $K$ centers are selected. This approach helps mitigate sensitivity to poor initializations and theoretically guarantees an $O(\log K)$-competitive solution. The K-means algorithm was implemented in Python using the \texttt{KMeans} class from the scikit-learn library.
+\end{enumerate}
 
-For these two methods, k-means is the most classic clustering methods which can act as a \underline{baseline} and since it is fast, it can quickly bring us some insights on the clustering analysis. And since we have already see sub-clusters in the t-SNE analysis, we may try to use hierarchical clustering for more precisely capturing the locality of small sub-clusters.
+\paragraph{Agglomerative clustering} Agglomerative hierarchical clustering employs a bottom-up strategy, initially treating each data point as an individual cluster. It then iteratively merges the closest pairs of clusters until only a single cluster containing all data points remains, or a pre-specified number of clusters is reached. The method for measuring the distance between clusters is critical to its performance, and here we are using Ward's method, which aims to minimize the total within-cluster sum of squares, and the cost of merging two clusters, $A$ and $B$, can be expressed as: $\Delta(A, B)=\frac{2n_An_b}{n_A+n_B}\|\mu_A-\mu_B\|^2$ where $n_A, n_B$ represent the number of elements in cluster $A$ and $B$, respectively. This algorithm was implemented in Python using the \texttt{AgglomerativeClustering} in scikit-learn.
+
+The selection of these two methods was motivated by their distinct characteristics. K-means, being a classic and computationally efficient algorithm, provides a rapid baseline for clustering performance. Agglomerative hierarchical clustering was chosen due to observations from the t-SNE analysis (as seen in Figure \underline{xxxxx}), which suggested the presence of potential sub-clusters. It was hypothesized that a hierarchical approach might better capture the original data distribution and provide more nuanced insights into these finer-grained structures.
 
 \subsubsection*{Results}
 
-The clustering results is visualized in \underline{Fig} and we have used some methods to evaluate the performance of the clustering.
+The outcomes of the K-means and agglomerative clustering algorithms were visualized in \underline{figure xxx} and quantitatively evaluated using several established metrics. To assess the intrinsic quality of the clusters, including their compactness and separation, the Silhouette Score, Calinski-Harabasz Score, and Davies-Bouldin Score were employed. Furthermore, the Adjusted Rand Score (ARI) was utilized as an external metric to evaluate the extent to which the resulting clusters align with the ground truth labels of the dataset.
 
-\underline{need to analyze the results and tell which one is better in terms of performance}
+The analysis of these metrics revealed an interesting divergence in performance. Regarding the internal quality metrics, K-means demonstrated superior performance compared to agglomerative clustering. The higher Silhouette Score and Calinski-Harabasz Score, alongside a lower Davies-Bouldin Score for K-means, indicate that it formed clusters with comparatively better intra-cluster similarity and greater inter-cluster separation from a geometric perspective.
 
-\underline{need to gain more insights from the clustering}
+However, when evaluated using the external Adjusted Rand Index, agglomerative hierarchical clustering outperformed K-means. This finding suggests that while K-means may produce geometrically "neater" clusters (often spherical, due to its objective function), these do not align as closely with the actual underlying class distributions as the clusters produced by the hierarchical method. This discrepancy implies that the true data distribution is complex, and an over-reliance on preferred geometric shapes (a characteristic of K-means) might yield high scores on shape-focused internal metrics but fail to capture the nuanced information present in the ground truth labels. Moreover, the not balanced distribution of the two labels may also be one of the reasons behind the bad performance of K-means, which assumes that the clusters have similar densities and sizes.
 
+The observed diversity within one of the ground truth classes, particularly the tendency for these samples to exhibit sub-clustering (as hinted at in the t-SNE visualization, e.g., the right-hand side of Figure \underline{xxxx}), leads to the hypothesis that these sub-structures might be influenced by noisy or less discriminative features that prevent clear separation, making the clustering performance not satisfactory. Agglomerative clustering will be further explored in future analysis to determine if it can more effectively delineate these potential sub-clusters.
 
 \subsection{Prediction: training and testing}
 
@@ -165,7 +168,7 @@ Therefore, as for prediction, we would like to use decision tree based models an
 After fitting the model with the train data, we then get the trained model and the corresponding decision boundary is also visualized in the \underline{figure}. From the figure we can see that the decision tree model is more expressive, as it can bring us multiple decision areas and decision boundaries while the logistic regression model cannot handle the complex data distribution and its decision boundary and the decision boundary just go cross some of the samples. 
 
 
-This intuition implied by the visualizatoin is also supported by the metrics. From the table \underline{below} we can see that as for the overall performance. 
+This intuition implied by the visualization is also supported by the metrics. From the table \underline{below} we can see that as for the overall performance. 
 
 \underline{interpretion of results}
 
