@@ -1,0 +1,21 @@
+\begin{figure}[!htbp] % 使用 [!htbp] 作为浮动位置建议 (与原代码一致)
+  \centering % 整体居中所有子图
+
+  % 一行，两个子图
+  \begin{subfigure}{0.48\textwidth} % 每个子图大约占页面宽度的48%
+    \centering
+    \fbox{\rule[-.5cm]{0cm}{3cm} \rule[-.5cm]{3cm}{0cm}} % 占位符，尺寸可以根据需要调整
+    \caption{A} % 第一个子图的标题
+    \label{fig:subA_1x2} % 第一个子图的标签 (建议修改标签以反映新布局)
+  \end{subfigure}\hfill % \hfill 用于在子图之间平均分配水平空间
+  \begin{subfigure}{0.48\textwidth} % 第二个子图也大约占页面宽度的48%
+    \centering
+    \fbox{\rule[-.5cm]{0cm}{3cm} \rule[-.5cm]{3cm}{0cm}} % 占位符
+    \caption{B} % 第二个子图的标题
+    \label{fig:subB_1x2} % 第二个子图的标签
+  \end{subfigure}
+  % 由于只有一行，不再需要 \vspace{1em} 和第二行的代码
+
+  \caption{This figure shows the clustering results for K-means and agglomerative hierachical clustering.} % 主图的标题 (保持不变)
+  \label{fig:main_figure_1x2_grid} % 主图的标签 (建议修改标签以反映新布局)
+\end{figure}

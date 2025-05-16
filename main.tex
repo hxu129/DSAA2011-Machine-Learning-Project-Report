@@ -7,7 +7,7 @@
 
 
 % ready for submission
-\usepackage[final]{neurips_2025}
+\usepackage[preprint]{neurips_2025}
 
 
 % to compile a preprint version, e.g., for submission to arXiv, add add the
@@ -33,7 +33,12 @@
 \usepackage{nicefrac}       % compact symbols for 1/2, etc.
 \usepackage{microtype}      % microtypography
 \usepackage{xcolor}         % colors
-
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{graphicx} % 虽然现在是占位符，但将来替换图片时会用到
+\usepackage{subcaption} % 用于创建子图环境
+\usepackage{makecell}
+\usepackage{tabularray}
 
 \title{Project Report \large \\ DSAA2011 Machine Learning}
 
@@ -91,6 +96,8 @@ The Adult Income datasets is a binary classification dataset with 14 usable vari
 
 After imputing missing values and converting all features to numeric ones, we then get a wide dataframe with \underline{123456} features, making the computation costs high and taking much time in training and testing. For efficiency and visualization purposes, we then use t-SNE to reduce the dimensionality of the original data and get both the 2D and 3D embedding for future usages.
 
+\input{assets/tab_tsne_performance}
+
 \underline{justify why we should use t-sne in 3D: comparing the time and performance}
 
 \underline{put a table here to show the performance of t-SNE embedding}
@@ -105,6 +112,8 @@ After imputing missing values and converting all features to numeric ones, we th
 
 \underline{explicitly show the mis assigned labels and try to make the 3D graph more readable}
 
+\input{assets/fig_tsne}
+
 With 2D and 3D t-SNE embedding, we would like to visualize the dataset and explore more information within the dataset. For the 2D visualization, the first thing we notice is that samples from two different classes are not very distinguishable as they fall in the same clusters with different labels. As for samples with income less than $50$K, they are spread over almost all the figure while the samples with income greater than $50$K tend to cluster on only one side of the
 figure, which indicates that the class $\le 50K$ is a more general, diverse class with samples from different distribution while for the class $>50K$. 
 
@@ -115,6 +124,10 @@ Moreover, this also indicates that most of the features in the original dataset 
 Moreover, this also indicates that if we just directly use the t-SNE embedding to perform future tasks, we may fail since we cannot separate the samples based on the embedding good enough.
 
 \subsection{Clustering analysis}
+
+\input{assets/tab_clustering_performance}
+
+\input{assets/fig_clustering}
 
 \begin{itemize}
     \item description of the two chosen algorithms and why they are selected
@@ -170,24 +183,33 @@ Therefore, as for prediction, we would like to use decision tree based models an
 
 \subsubsection*{Results}
 
+\input{assets/fig_vanilla_models}
+
+
 After fitting the model with the train data, we then get the trained model and the corresponding decision boundary is also visualized in the \underline{figure}. From the figure we can see that the decision tree model is more expressive, as it can bring us multiple decision areas and decision boundaries while the logistic regression model cannot handle the complex data distribution and its decision boundary and the decision boundary just go cross some of the samples. 
+
 
 This intuition implied by the visualizatoin is also supported by the metrics. From the table \underline{below} we can see that as for the overall performance. 
 
 \underline{interpretion of results}
+
 
 However, it is quite clear that the performance is still not amazingly great, as the accuracy is just around \underline{1234} which is far below the legend of tree based models. Since we think the power of tree models is from its ability to create flexible decision areas, we think that adding the depth of the trees or increasing the number of trees in the process of fitting may be a good idea. We then increase the depth of a single decision tree to \underline{1245} and did more experiments,
 while we used the ensemble models to do more experiments. Their decision boundary are visualized in \underline{figure xxx} and the performance metrics are in \underline{table xxx}. Based on the results above, we may see that the ability of classification does increase as the tree goes deeper, 
 \underline{(but as the tree goes too deep, the performance on the test set will decrease as the model start to overfit)}. 
 And for the decision boundaries, we can see that the two models can bring us more complex but robust decision boundaries.
 
+\input{assets/fig_ensemble_models}
+
 Also, we may see the importance of features for further support on our conclusion and the results can be referred to in \underline{fig xxx}. For the best performance model XGBoost, we can see that the importance of features is significantly imbalanced as the \underline{xxxxx} matters most while the model pays little attention on the other features. For the vanilla decision tree model and the random forest model, they pay attention to more features but result in worse performance. This
-interesting discover align with the mechanism of XGBoost and the rest, as the gradient boosting model will try to learn from its failures and may be more able to learn the features which can make it away from error, while the random forest or the vanilla decision models will pay equal attention on all of the features and will be more likely affected by noises. This fact also aligns to our t-SNE visualization in \underline{figure} as it clearly shows the existence of noisy features and
+interesting discovery align with the mechanism of XGBoost and the rest, as the gradient boosting model will try to learn from its failures and may be more able to learn the features which can make it away from error, while the random forest or the vanilla decision models will pay equal attention on all of the features and will be more likely affected by noises. This fact also aligns to our t-SNE visualization in \underline{figure} as it clearly shows the existence of noisy features and
 only a few of features really matters.
 
 Meanwhile, the performance on one class is significantly worse than another class, which may due to the not balanced distribution in the train data.
 
 \subsubsection*{Model selection}
+
+\input{assets/fig_model_selection}
 
 After fitting the models, we can select the model to use by analyzing their performance. The classification results are illustrated in \underline{table xxxxxxx} and based on that, we can calculate the ROC and AUC in \underline{fig xxx}. It shows that model \underline{xxxx} has the greatest AUC and it can balance well on the data
 
@@ -236,7 +258,7 @@ hippocampal region CA3. {\it Journal of Neuroscience} {\bf 15}(7):5249-5262.
     \item \textbf{Leyi WU}: 
     \item \textbf{Hua XU}: 
     \item \textbf{Jianhao RUAN}:
-    \item \textbf{AI}:
+    \item \textbf{AI}: Formatting latex tables and figures.
 
 \end{itemize}
 

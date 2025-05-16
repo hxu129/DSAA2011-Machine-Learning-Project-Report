@@ -1,0 +1,59 @@
+
+
+\begin{figure}[!thbp] % 浮动位置建议
+\centering
+\caption{This is the performance comparison for the two vanilla models.} % 您可以修改为您的总标题
+\label{fig:A_spans_rows}
+
+% 使用 tabularray 环境来创建网格布局
+% colspec: 定义三列，X[c,m] 表示列宽自动调整、内容水平居中(c)、垂直居中(m)
+% rowsep: 行间距
+\begin{tblr}{
+  colspec = {X[c,m] X[c,m] X[c,m]},
+  rowsep = {0.5em} % 行之间的间距，可以调整
+}
+% --- 第一行 ---
+\SetCell[r=2]{c} % 设置此单元格 (图片A) 跨越2行 (r=2)，内容居中 (c)
+  \begin{subfigure}{\linewidth} % 子图A，宽度为当前单元格宽度
+    \centering
+    % 占位符A，高度设置得较大，宽度自适应单元格
+    \fbox{\rule[-.5cm]{0cm}{6cm} \rule[-.5cm]{0.9\linewidth}{0cm}}
+    \caption{Performance metrics Comparison (the heat map)}
+    \label{fig:sub_A_span}
+  \end{subfigure}
+& % 第二列，第一行 (图片B)
+  \begin{subfigure}{\linewidth}
+    \centering
+    \fbox{\rule[-.5cm]{0cm}{2.8cm} \rule[-.5cm]{0.9\linewidth}{0cm}}
+    \caption{Confusion matrix for logistic regression}
+    \label{fig:sub_B}
+  \end{subfigure}
+& % 第三列，第一行 (图片C)
+  \begin{subfigure}{\linewidth}
+    \centering
+    \fbox{\rule[-.5cm]{0cm}{2.8cm} \rule[-.5cm]{0.9\linewidth}{0cm}}
+    \caption{Decision boundary for logistic regression}
+    \label{fig:sub_C}
+  \end{subfigure}
+\\ % 结束第一行 (B和C所在的行)
+
+% --- 第二行 ---
+% 第一列由图片A跨行占据，所以这里为空
+& % 第二列，第二行 (图片D)
+  \begin{subfigure}{\linewidth}
+    \centering
+    \fbox{\rule[-.5cm]{0cm}{2.8cm} \rule[-.5cm]{0.9\linewidth}{0cm}}
+    \caption{Confusion matrix for decision tree}
+    \label{fig:sub_D}
+  \end{subfigure}
+& % 第三列，第二行 (图片E)
+  \begin{subfigure}{\linewidth}
+    \centering
+    \fbox{\rule[-.5cm]{0cm}{2.8cm} \rule[-.5cm]{0.9\linewidth}{0cm}}
+    \caption{Decision boundary for decision tree}
+    \label{fig:sub_E}
+  \end{subfigure}
+\\ % 结束第二行
+\end{tblr}
+\end{figure}
+

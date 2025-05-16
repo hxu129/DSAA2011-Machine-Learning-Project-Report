@@ -1,0 +1,55 @@
+
+%\begin{document}
+
+
+\begin{figure}[!htbp] % 使用 [htbp] 作为浮动位置建议
+  \centering % 整体居中所有子图
+
+  % 第一行
+  \begin{subfigure}{0.3\textwidth} % 每个子图大约占页面宽度的30%
+    \centering
+    \fbox{\rule[-.5cm]{0cm}{3cm} \rule[-.5cm]{3cm}{0cm}} % 调整了占位符大小以便排列
+    \caption{A}
+    \label{fig:sub1}
+  \end{subfigure}\hfill % \hfill 用于在子图之间平均分配水平空间
+  \begin{subfigure}{0.3\textwidth}
+    \centering
+    \fbox{\rule[-.5cm]{0cm}{3cm} \rule[-.5cm]{3cm}{0cm}}
+    \caption{B}
+    \label{fig:sub2}
+  \end{subfigure}\hfill
+  \begin{subfigure}{0.3\textwidth}
+    \centering
+    \fbox{\rule[-.5cm]{0cm}{3cm} \rule[-.5cm]{3cm}{0cm}}
+    \caption{C}
+    \label{fig:sub3}
+  \end{subfigure}
+
+  \vspace{1em} % 在两行子图之间添加一些垂直间距
+
+  % 第二行
+  \begin{subfigure}{0.3\textwidth}
+    \centering
+    \fbox{\rule[-.5cm]{0cm}{3cm} \rule[-.5cm]{3cm}{0cm}}
+    \caption{D}
+    \label{fig:sub4}
+  \end{subfigure}\hfill
+  \begin{subfigure}{0.3\textwidth}
+    \centering
+    \fbox{\rule[-.5cm]{0cm}{3cm} \rule[-.5cm]{3cm}{0cm}}
+    \caption{E}
+    \label{fig:sub5}
+  \end{subfigure}\hfill
+  \begin{subfigure}{0.3\textwidth}
+    \centering
+    \fbox{\rule[-.5cm]{0cm}{3cm} \rule[-.5cm]{3cm}{0cm}}
+    \caption{F}
+    \label{fig:sub6}
+  \end{subfigure}
+
+  \caption{This figure shows the visualization results using t-SNE with different dimensionality and different perplexity. The corresponding parameters are showed on the figure.}
+  \label{fig:main_figure_grid}
+\end{figure}
+
+
+%\end{document}

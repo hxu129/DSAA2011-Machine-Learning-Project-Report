@@ -1,0 +1,15 @@
+\begin{table}[htbp] % 建议使用 [htbp] 而不是 [!h] 以获得更好的浮动效果
+\centering
+\caption{The relationship between performance of t-SNE (measured with KL divergence) and the target dimension and perplexity. The lower the KL divergence value is, the better the performace is.} % 精简后的标题
+\label{tab:tsne_performance_comparison} % 添加一个标签方便引用
+\begin{tabular}{@{}llccc@{}} % @{} 移除了表格边缘的额外空白，调整了列格式
+\toprule
+& & \multicolumn{3}{c}{Perplexity} \\
+\cmidrule(lr){3-5} % (lr) 表示左右稍微缩短线条，只覆盖 Perplexity 下的列
+& & 10 & 30 & 50 \\
+\midrule
+\multirow{2}{*}{Dimensionality} & 2 & ValueA & ValueB & ValueC \\ % 用占位符 ValueA 等代替实际数据
+& 3 & ValueD & ValueE & ValueF \\ % 用占位符 ValueD 等代替实际数据
+\bottomrule
+\end{tabular}
+\end{table}
