@@ -144,62 +144,6 @@ However, when evaluated using the external Adjusted Rand Index, agglomerative hi
 
 The observed diversity within one of the ground truth classes, particularly the tendency for these samples to exhibit sub-clustering (as hinted at in the t-SNE visualization, e.g., the right-hand side of Figure \underline{xxxx}), leads to the hypothesis that these sub-structures might be influenced by noisy or less discriminative features that prevent clear separation, making the clustering performance not satisfactory. Agglomerative clustering will be further explored in future analysis to determine if it can more effectively delineate these potential sub-clusters.
 
-\subsection{Prediction: training and testing}
-
-\subsubsection*{Methods}
-
-Based on the t-SNE visualization and clustering analysis, we may see that the data distribution is quite complicated and it might not be easy to find a simple, clear line or a plane in a hyperspace which can correct set the samples apart. Therefore, we think that simple logistic models may not be good enough to perform the classification task.  Therefore, as for prediction, we would like to use decision tree based models for better performance, since it can create a more complex decision space and boundary, and as for the logistic regression, we use this method in comparison of tree based methods.
-
-\paragraph{Logistic regression} Logistic regressions 123456.
-
-\paragraph{Decision trees} Decision trees 123456.
-
-\subsubsection{Configuration}
-
-As for the logistic regression model, we are using \underline{here describe the hyperparameters for the model}\ldots
-
-Since the logistic regression model is deterministic, \underline{(describe the training configuration and the training process)}\ldots.
-
-As for the gradient boosting model XGBoost, \underline{(describe the training configuration and the training process)}
-
-\subsubsection*{Results}
-
-\input{assets/fig_vanilla_models}
-
-\underline{visualization of decision boundaries with different ways}
-
-After fitting the model with the train data, we then get the trained model and the corresponding decision boundary is also visualized in the \underline{Figure}. However, since the model is fitted in high dimensional space, it is hard to visualize the decision boundary in 2D or 3D space. To do so, at first we just tried to iterate through all the data points in the t-SNE space and classify and colour them based on the prediction of our model, and the decision boundary we obtained is in \underline{Figure xxx}. However, t-SNE dimensionality reduction is an non-linear transformation which may twist the original decision boundary and we cannot get any useful information from it. Instead, we then tried to use these two methods:
-
-\begin{itemize}
-    \item PCA: We try to use PCA to visualize the decision boundary as it is a linear transformation. Although it cannot provide us details about whether the decision boundary is complex or not, it can tell us which principle component is most important in telling the classes apart. We firstly perform PCA analysis on the original dataset, then get the transformation matrices, which is later used to transform the decision boundary. The decision boundary is visualized in \underline{Figure xxxx} and we can see, that both logistic regression and decision model tells the samples apart based on information in the feature \underline{A, B, C}. 
-    \item \underline{search for more methods to visualize the decision boundaries}
- %   \item Directly reducing data: \underline{After fitting the decision tree model / performing the PCA analysis}, we can see the importance of the feature \underline{A, B, C} and therefore, visualizing the decision boundary in the 3D space constructed with \underline{A, B, C } can somehow reflect the complexity of our model's decision boundaries while not make any 扭曲 of the original decison boundary. Then the decision boundary is visualized in \underline{Figure xxx}. From this 
-\end{itemize}
-
-From the figure we can see that the decision tree model is more expressive, as it can bring us multiple decision areas and decision boundaries while the logistic regression model cannot handle the complex data distribution and its decision boundary and the decision boundary just go cross some of the samples. 
-This intuition implied by the visualization is also supported by the metrics. From \underline{Figure xxxx} we can see that for decision tree model, it can achieve better performance in terms of accuracy and f1 scores. 
-
-However, it is quite clear that the performance is still not amazingly great, as the accuracy is just around \underline{1234} which is far below the myth of tree based models. Since we think the power of tree models is from its ability to create flexible decision areas, we think that adding the depth of the trees or increasing the number of trees in the process of fitting may be a good idea. We then increase the depth of a single decision tree to \underline{1245} and did more experiments.
-
-\input{assets/fig_depth_dt}
-
-while we used the ensemble models to do more experiments. Their decision boundary are visualized in \underline{figure xxx} and the performance metrics are in \underline{table xxx}. Based on the results above, we may see that the ability of classification does increase as the tree goes deeper, 
-\underline{(but as the tree goes too deep, the performance on the test set will decrease as the model start to overfit)}. 
-And for the decision boundaries, we can see that the two models can bring us more complex decision boundaries, making the prediction more precise. 
-
-\input{assets/fig_ensemble_models}
-
-Also, we may see the importance of features for further support on our conclusion and the results can be referred to in \underline{fig xxx}. For the best performance model XGBoost, we can see that the importance of features is significantly imbalanced as the \underline{xxxxx} matters most while the model pays little attention on the other features. For the vanilla decision tree model and the random forest model, they pay attention to more features but result in worse performance. This interesting discovery align with the mechanism of XGBoost and the rest, as the gradient boosting model will try to learn from its failures and may be more able to learn the features which can make it away from error, while the random forest or the vanilla decision models will pay equal attention on all of the features and will be more likely affected by noises. This fact also aligns to our t-SNE visualization in \underline{figure} as it clearly shows the existence of noisy features and
-only a few of features really matters.
-
-Meanwhile, the performance on one class is significantly worse than another class, which may due to the not balanced distribution in the train data.
-
-\subsubsection*{Model selection}
-
-\input{assets/fig_model_selection}
-
-In this task, our goal is to find a model class which can utilize the given data as much as possible while it can still generalize the learnt knowledge on unseen data. To evaluate the model performance, we are using the ROC curve and the AUC value illustrated in \underline{Table xxxx}, from which we can see that the XGBoost model with depth \underline{xxxxx} and \underline{(other parameters)} has the highest AUC value. Hence, in future tasks, we may use XGBoost to perform classification tasks on this dataset. 
-
 \subsection{Prediction: Training and Testing}
 
 \subsubsection*{Methods}
@@ -209,6 +153,14 @@ Insights derived from the t-SNE visualization and preceding clustering analysis 
 \paragraph{Logistic Regression} \underline{Logistic regressions 123456.}
 
 \paragraph{Decision Trees} \underline{Decision trees 123456.}
+
+\paragraph{Logistic Regression} Logistic Regression is a statistical model used for binary classification tasks, and can be extended for multi-class problems. It models the probability of a binary outcome using a logistic function (sigmoid function) applied to a linear combination of input features. For a given input sample $x_t$ and parameters $\theta$ and $\theta_0$ (offset), the probability of observing the class label $y_t \in \{-1, +1\}$ can be expressed as:
+$$ Pr(y_{t}|x_{t},\theta,\theta_{0}) = \frac{1}{1+\exp(-y_{t}(\langle\theta,x_{t}\rangle+\theta_{0}))} $$
+The model parameters $(\theta, \theta_0)$ are typically learned by minimizing a loss function, often the negative log-likelihood, which for $n$ samples can be written as $\sum_{t=1}^{n}\log[1+\exp(-y_{t}(\langle x_{t},\theta\rangle+\theta_{0}))]$. To prevent overfitting and improve generalization, regularization techniques such as $L_2$-norm regularization are commonly incorporated, leading to an objective function like:
+$$ \min_{(\theta,\theta_{0})\in\mathbb{R}^{d}\times\mathbb{R}}\frac{\lambda}{2}\|\theta\|^{2}+\sum_{t=1}^{n}\log[1+\exp(-y_{t}(\langle x_{t},\theta\rangle+\theta_{0}))] $$
+where $\lambda$ is the regularization parameter. This optimization is often solved using gradient-based methods. In this project, Logistic Regression is implemented using the \texttt{LogisticRegression} class from scikit-learn.
+
+\paragraph{Decision Trees} A Decision Tree is a non-parametric supervised learning method used for classification and regression tasks. It functions by constructing a tree-like model of decisions based on the input features. The tree is composed of decision nodes, which represent tests on specific features (e.g., $feature_A > value_X$), branches representing the outcomes of these tests, and leaf nodes (or terminal nodes) which represent the class labels (for classification) or continuous values (for regression). The construction of a decision tree involves a recursive partitioning of the dataset. At each node, the algorithm selects a feature $h^*(x)$ and a split point that best separates the data according to a certain criterion, such as minimizing impurity (e.g., Gini impurity or entropy) or maximizing information gain, which aims to reduce uncertainty at each step. This process continues until a stopping condition is met, for instance, when a node becomes pure (all samples in the node belong to the same class), a predefined maximum depth of the tree is reached, or the number of samples in a node falls below a minimum threshold. The resulting model is a hierarchical structure that is relatively easy to interpret and visualize. Decision tree models are implemented in Python using the \texttt{DecisionTreeClassifier} class from scikit-learn.
 
 \subsubsection*{Configuration}
 
