@@ -99,12 +99,7 @@ Upon completion of these preprocessing steps—imputing missing values and conve
 
 Moreover, as for the dataset itself, we may see that the number of samples not evenly fall into the two classes, as one class has \underline{xxxxxx} while the other one has \underline{xxxxxxxx}. This may cause troubles when training models, which will be discussed in \underline{Section xxx}.
 
-and facilitate effective visualization, t-SNE was employed as a dimensionality reduction technique. Both 2D and 3D embeddings of the data were generated. Based on an initial assessment [referencing your Table 1 which shows KL divergence], the 3D t-SNE embedding was selected for subsequent analyses due to its superior ability to preserve information compared to the 2D embedding.
-
-
 \input{assets/tab_tsne_performance}
-
-
 
 \subsection{Data visualization}
 
@@ -151,11 +146,6 @@ The observed diversity within one of the ground truth classes, particularly the 
 
 \subsection{Prediction: training and testing}
 
-\underline{need to describe the chosen classification target, model classes and why they were selected}
-
-\underline{need to describe the training process}
-
-
 \subsubsection*{Methods}
 
 Based on the t-SNE visualization and clustering analysis, we may see that the data distribution is quite complicated and it might not be easy to find a simple, clear line or a plane in a hyperspace which can correct set the samples apart. Therefore, we think that simple logistic models may not be good enough to perform the classification task.  Therefore, as for prediction, we would like to use decision tree based models for better performance, since it can create a more complex decision space and boundary, and as for the logistic regression, we use this method in comparison of tree based methods.
@@ -163,6 +153,14 @@ Based on the t-SNE visualization and clustering analysis, we may see that the da
 \paragraph{Logistic regression} Logistic regressions 123456.
 
 \paragraph{Decision trees} Decision trees 123456.
+
+\subsubsection{Configuration}
+
+As for the logistic regression model, we are using \underline{here describe the hyperparameters for the model}\ldots
+
+Since the logistic regression model is deterministic, \underline{(describe the training configuration and the training process)}\ldots.
+
+As for the gradient boosting model XGBoost, \underline{(describe the training configuration and the training process)}
 
 \subsubsection*{Results}
 
@@ -174,43 +172,107 @@ After fitting the model with the train data, we then get the trained model and t
 
 \begin{itemize}
     \item PCA: We try to use PCA to visualize the decision boundary as it is a linear transformation. Although it cannot provide us details about whether the decision boundary is complex or not, it can tell us which principle component is most important in telling the classes apart. We firstly perform PCA analysis on the original dataset, then get the transformation matrices, which is later used to transform the decision boundary. The decision boundary is visualized in \underline{Figure xxxx} and we can see, that both logistic regression and decision model tells the samples apart based on information in the feature \underline{A, B, C}. 
-    \item \underline{search for more methods to visualize the decision boundaried}
-    \item %Directly reducing data: \underline{After fitting the decision tree model / performing the PCA analysis}, we can see the importance of the feature \underline{A, B, C} and therefore, visualizing the decision boundary in the 3D space constructed with \underline{A, B, C } can somehow reflect the complexity of our model's decision boundaries while not make any 扭曲 of the original decison boundary. Then the decision boundary is visualized in \underline{Figure xxx}. From this 
+    \item \underline{search for more methods to visualize the decision boundaries}
+ %   \item Directly reducing data: \underline{After fitting the decision tree model / performing the PCA analysis}, we can see the importance of the feature \underline{A, B, C} and therefore, visualizing the decision boundary in the 3D space constructed with \underline{A, B, C } can somehow reflect the complexity of our model's decision boundaries while not make any 扭曲 of the original decison boundary. Then the decision boundary is visualized in \underline{Figure xxx}. From this 
 \end{itemize}
 
 From the figure we can see that the decision tree model is more expressive, as it can bring us multiple decision areas and decision boundaries while the logistic regression model cannot handle the complex data distribution and its decision boundary and the decision boundary just go cross some of the samples. 
-
 This intuition implied by the visualization is also supported by the metrics. From \underline{Figure xxxx} we can see that for decision tree model, it can achieve better performance in terms of accuracy and f1 scores. 
 
-However, it is quite clear that the performance is still not amazingly great, as the accuracy is just around \underline{1234} which is far below the legend of tree based models. Since we think the power of tree models is from its ability to create flexible decision areas, we think that adding the depth of the trees or increasing the number of trees in the process of fitting may be a good idea. We then increase the depth of a single decision tree to \underline{1245} and did more experiments,
+However, it is quite clear that the performance is still not amazingly great, as the accuracy is just around \underline{1234} which is far below the myth of tree based models. Since we think the power of tree models is from its ability to create flexible decision areas, we think that adding the depth of the trees or increasing the number of trees in the process of fitting may be a good idea. We then increase the depth of a single decision tree to \underline{1245} and did more experiments.
+
+\input{assets/fig_depth_dt}
+
 while we used the ensemble models to do more experiments. Their decision boundary are visualized in \underline{figure xxx} and the performance metrics are in \underline{table xxx}. Based on the results above, we may see that the ability of classification does increase as the tree goes deeper, 
 \underline{(but as the tree goes too deep, the performance on the test set will decrease as the model start to overfit)}. 
 And for the decision boundaries, we can see that the two models can bring us more complex decision boundaries, making the prediction more precise. 
 
 \input{assets/fig_ensemble_models}
 
-Also, we may see the importance of features for further support on our conclusion and the results can be referred to in \underline{fig xxx}. For the best performance model XGBoost, we can see that the importance of features is significantly imbalanced as the \underline{xxxxx} matters most while the model pays little attention on the other features. For the vanilla decision tree model and the random forest model, they pay attention to more features but result in worse performance. This
-interesting discovery align with the mechanism of XGBoost and the rest, as the gradient boosting model will try to learn from its failures and may be more able to learn the features which can make it away from error, while the random forest or the vanilla decision models will pay equal attention on all of the features and will be more likely affected by noises. This fact also aligns to our t-SNE visualization in \underline{figure} as it clearly shows the existence of noisy features and
+Also, we may see the importance of features for further support on our conclusion and the results can be referred to in \underline{fig xxx}. For the best performance model XGBoost, we can see that the importance of features is significantly imbalanced as the \underline{xxxxx} matters most while the model pays little attention on the other features. For the vanilla decision tree model and the random forest model, they pay attention to more features but result in worse performance. This interesting discovery align with the mechanism of XGBoost and the rest, as the gradient boosting model will try to learn from its failures and may be more able to learn the features which can make it away from error, while the random forest or the vanilla decision models will pay equal attention on all of the features and will be more likely affected by noises. This fact also aligns to our t-SNE visualization in \underline{figure} as it clearly shows the existence of noisy features and
 only a few of features really matters.
 
 Meanwhile, the performance on one class is significantly worse than another class, which may due to the not balanced distribution in the train data.
-
-\underline{check whether we have already explicitly compare the model performance}
 
 \subsubsection*{Model selection}
 
 \input{assets/fig_model_selection}
 
-In this task, our goal for selecting models is to find a 
+In this task, our goal is to find a model class which can utilize the given data as much as possible while it can still generalize the learnt knowledge on unseen data. To evaluate the model performance, we are using the ROC curve and the AUC value illustrated in \underline{Table xxxx}, from which we can see that the XGBoost model with depth \underline{xxxxx} and \underline{(other parameters)} has the highest AUC value. Hence, in future tasks, we may use XGBoost to perform classification tasks on this dataset. 
 
-After fitting the models, we can select the model to use by analyzing their performance. The classification results are illustrated in \underline{table xxxxxxx} and based on that, we can calculate the ROC and AUC in \underline{fig xxx}. It shows that model \underline{xxxx} has the greatest AUC and it can balance well on the data
+\subsection{Prediction: Training and Testing}
 
+\subsubsection*{Methods}
+
+Insights derived from the t-SNE visualization and preceding clustering analysis suggest that the dataset exhibits a complex underlying distribution. This complexity implies that a simple linear separator or a hyperplane in the high-dimensional feature space may not be sufficient to accurately distinguish between the classes. Consequently, it is hypothesized that simpler models, such as standard logistic regression, might yield suboptimal performance on this classification task. Therefore, for the prediction phase, decision tree-based models were primarily investigated due to their inherent capability to construct more intricate decision spaces and boundaries. Logistic regression was included as a baseline for comparison against these tree-based methods.
+
+\paragraph{Logistic Regression} \underline{Logistic regressions 123456.}
+
+\paragraph{Decision Trees} \underline{Decision trees 123456.}
+
+\subsubsection*{Configuration}
+
+For the logistic regression model, the following hyperparameter settings were utilized: 
+
+\underline{here describe the hyperparameters for the model}\ldots
+
+Given that the logistic regression model is deterministic under fixed hyperparameters, the training process involved 
+
+\underline{(describe the training configuration and the training process)}\ldots.
+
+For the gradient boosting model, XGBoost, the training configuration was set as follows: 
+
+\underline{(describe the training configuration and the training process)}.
+
+\subsubsection*{Results}
+
+\input{assets/fig_vanilla_models}
+
+\underline{visualization of decision boundaries with different ways} % This seems like a note for yourself, so I'll keep it commented or you can integrate its meaning below.
+
+Following model training on the designated training data, the resultant decision boundaries were visualized, as depicted in \underline{Figure [Reference to specific figure, e.g., Figure 3 or 4]}. Visualizing decision boundaries derived from models fitted in a high-dimensional space presents a challenge when projecting to 2D or 3D. An initial attempt involved iterating through data points in the t-SNE embedded space, classifying them with our trained high-dimensional model, and color-coding accordingly to infer a boundary (shown in \underline{Figure xxx}). However, due to the non-linear nature of t-SNE, which can significantly distort the original decision boundary geometry, this approach did not yield readily interpretable information.
+
+Subsequently, alternative methods for decision boundary visualization were explored:
+
+\begin{itemize}
+\item PCA-based Visualization: Principal Component Analysis (PCA) was employed to visualize the decision boundary, leveraging its property as a linear transformation. While PCA may not fully capture the complexity of a non-linear boundary, it can reveal which principal components are most influential in class separation. PCA was first performed on the original dataset to obtain the transformation matrices. These matrices were then used to project an approximation of the decision boundary. The resulting visualization (see \underline{Figure xxxx}) suggests that both logistic regression and decision tree models primarily utilize information from features \underline{A, B, C} for class discrimination.
+\item \underline{search for more methods to visualize the decision boundaries}
+%    \item Directly reducing data: \underline{After fitting the decision tree model / performing the PCA analysis}, we can see the importance of the feature \underline{A, B, C} and therefore, visualizing the decision boundary in the 3D space constructed with \underline{A, B, C } can somehow reflect the complexity of our model's decision boundaries while not make any 扭曲 (distortion) of the original decison boundary. Then the decision boundary is visualized in \underline{Figure xxx}. From this
+\end{itemize}
+
+The visualizations indicate that the decision tree model possesses greater expressiveness, capable of defining multiple, distinct decision areas and boundaries. In contrast, the logistic regression model appears less adept at handling the complex data distribution, with its decision boundary often transecting groups of samples from different classes. This visual intuition is corroborated by quantitative performance metrics. As shown in \underline{Figure xxxx [Reference to performance metrics figure/table]}, the decision tree model achieved superior performance in terms of accuracy and F1-scores compared to logistic regression.
+
+Despite this, however, the overall performance of the initial decision tree model, with an accuracy around \underline{1234}, was not exceptional and fell short of the typical efficacy associated with tree-based models on complex datasets. Recognizing that the strength of tree models lies in their capacity to create flexible decision regions, we hypothesized that increasing tree depth or employing ensemble methods could yield improvements. Accordingly, the depth of a single decision tree was increased to \underline{1245}, and further experiments were conducted. The results are shown in \underline{Figure xxx}, which indeed confirm our arguments as the decision boundaries get more complicated while the accuracy increases. Note that in the end, the decision boundary is overally complicated to fit the train data, which causes the problem of overfitting and the model performance no longer increases as the depth of decision trees increases.
+
+\input{assets/fig_depth_dt}
+
+Concurrently, ensemble models (Random Forest and XGBoost) were also evaluated. The decision boundaries for these models are visualized in \underline{figure xxx}, and their performance metrics are detailed in \underline{table xxx}. The results also show that the ensemble models demonstrate the capability to generate more complex and robust decision boundaries, contributing to more precise predictions. 
+
+\underline{based on the data and performance, we can discuss more on the depth and overfitting of ensemble models}
+
+\input{assets/fig_ensemble_models}
+
+Feature importance analysis, presented in \underline{fig xxx}, provides additional support for our conclusions. For the top-performing model, XGBoost, feature importance is notably imbalanced: feature \underline{xxxxx} exhibits the highest importance, while other features receive considerably less attention. In contrast, the standard decision tree and Random Forest models distribute importance more broadly across features, which correlates with their comparatively weaker performance. This observation aligns with the operational mechanisms of these algorithms; gradient boosting models like XGBoost iteratively learn from errors and are adept at identifying features that most effectively contribute to error reduction, whereas standard decision trees and Random Forest models may give more uniform consideration to all features, making them potentially more susceptible to noise. This finding is also consistent with our earlier t-SNE visualizations (\underline{figure [Reference to t-SNE figure]}), which suggested the presence of noisy or less informative features and highlighted that only a few features might be critical for class separation.
+
+It was also observed that model performance on one class was significantly poorer than on the other, potentially attributable to an imbalanced distribution of class labels in the training data.
+
+\subsubsection*{Model Selection}
+
+\input{assets/fig_model_selection}
+
+The primary objective in this task is to identify a model class that effectively utilizes the available data while maintaining strong generalization capabilities on unseen data. Model performance was evaluated using the Receiver Operating Characteristic (ROC) curve and the corresponding Area Under the Curve (AUC) value, as illustrated in \underline{Table xxxx [or Figure xxxx if it's a plot]}. From these results, the XGBoost model, configured with a depth of \underline{xxxxx} and \underline{(other parameters)}, achieved the highest AUC value. Consequently, XGBoost is recommended for future classification tasks on this dataset.
 
 \section{Conclusion}
 
-In this project, we try to explore the intrinsic characteristics of the Adult Income dataset and try to perform classification tasks with different models on it. Through our analysis, we find that the dataset contains a lot of redundant features which do not help the task too much but still will be involved in the classification process, making the costs big and the performance bad. Only a few features matter. With this observation, we then visualized the dataset with clustering methods, and through our analysis of the clustering methods, we have confirmed our hypothesis that the distribution of the data might be complex, so as the decision boundary. For better performance, we use decision tree since it can create complex decision boundary and we use logistic regression in contrast. While the performance of the models does meet our expectation, it is not yet good enough. Then we start to create more complex decision boundaries with deeper decision trees and more complicated ensemble models. The results shows that as the trees get deeper, its decision boundary will also get deeper, making the classification good while too deep trees may overfit on the training set. As for the ensemble models, both of them can fit well on the given data, while XGBoost can learn from its errors and learn the most important features. Since it has the lowest \underline{AUC} value, it can balance well between recall and precision, making it suitable for performing classification on this dataset. In the future, more experiments need to be done to achieve better classification performance, including doing better feature engineering, dealing with imbalanced data. More experiments with different random seeds are also needed to validate the discoveries about the depth of decision trees, the complexity of decision boundaries and so on.
+This project undertook an exploration of the Adult Income dataset, focusing on its intrinsic characteristics and the performance of various classification models. After filling the missing values and performing one-hot encoding, our analysis revealed that the dataset contains a significant number of redundant features. These features offer limited utility to the classification task but contribute to increased computational costs and can negatively impact model performance, underscoring that only a subset of features is truly influential.
 
-\underline{we may need to find one or two papers to support our conclusion that only the specific feature is important on the dataset}
+Initial exploratory data analysis, including visualization with t-SNE and clustering, supported the hypothesis that the dataset possesses a complex underlying distribution, which in turn suggests that the optimal decision boundary for classification is likely to be intricate.
+
+In the subsequent classification phase, decision tree models were selected for their ability to capture complex decision boundaries, with logistic regression serving as a contrasting simpler model. While the initial performance of these models met basic expectations, there was clear scope for improvement. Consequently, more sophisticated approaches were investigated, including increasing the depth of individual decision trees and employing ensemble models like Random Forest and XGBoost. The results indicated that deeper decision trees can achieve better classification accuracy by forming more detailed decision boundaries, although excessively deep trees risk overfitting to the training data.
+
+Among the ensemble models, both Random Forest and XGBoost demonstrated strong fitting capabilities. XGBoost, in particular, distinguished itself through its mechanism of learning from prior errors and its proficiency in identifying the most salient features for classification. Based on its highest AUC value, XGBoost demonstrated a superior balance between recall and precision, establishing it as a highly suitable model for this classification task.
+
+Future work should focus on further enhancing classification performance. Potential avenues include more refined feature engineering, strategies to address class imbalance within the dataset, and conducting more extensive experiments with varied random seeds to robustly validate the current findings regarding decision tree depth and decision boundary complexity.
 
 \section*{References}
 {
