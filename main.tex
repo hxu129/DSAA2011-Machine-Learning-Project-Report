@@ -104,18 +104,14 @@ After imputing missing values and converting all features to numeric ones, we th
 
 \subsection{Data visualization}
 
-\underline{explicitly show the mis assigned labels and try to make the 3D graph more readable}
-
 \input{assets/fig_tsne}
 
-With 2D and 3D t-SNE embedding, we would like to visualize the dataset and explore more information within the dataset. For the 2D visualization, the first thing we notice is that samples from two different classes are not very distinguishable as they fall in the same clusters with different labels. As for samples with income less than $50$K, they are spread over almost all the figure while the samples with income greater than $50$K tend to cluster on only one side of the
-figure, which indicates that the class $\le 50K$ is a more general, diverse class with samples from different distribution while for the class $>50K$. 
+The t-SNE dimensionality reduction technique, known for its strength in preserving local similarities between data samples, was employed for initial data exploration through visualization. This visual analysis revealed several key characteristics of the dataset. Firstly, it highlighted the potential presence of multiple sub-clusters, even within the same ground truth class label. This observation suggests considerable diversity within classes, potentially indicating the existence of distinct sub-classes. Such granularity might necessitate fitting different predictive models to these identified sub-clusters should overall model performance prove unsatisfactory with a single global model.
 
-If we take a closer look at the labels inside, we may see that there are different sub clusters.
+Secondly, and significantly, the t-SNE visualization indicated that samples from the two primary income classes ( $\le50K$ and $>50K$) are not clearly distinguishable, often co-occurring within the same visual clusters despite their different labels. Specifically, samples with income less than 50K appear broadly distributed across the visualization, whereas samples with income greater than 50K tend to concentrate on one side of the plot. This pattern suggests that the $\le50K$ class is more general and heterogeneous, encompassing a wider range of data distributions, compared to the more localized $>50K$ class.
 
-Moreover, this also indicates that most of the features in the original dataset may not be useful in terms of separating the samples apart and these features make the samples close to each other in the original feature space, and we may need to find the important ones for better performance.
+The observed overlap between classes in the t-SNE embedding, while potentially influenced to some extent by information loss inherent in any dimensionality reduction process, strongly implies that many features in the original high-dimensional dataset may not be effective at separating the two income classes. These less discriminative features could be causing samples from different classes to appear close to each other in the original feature space. Consequently, there might be a need to identify and prioritize more important, distinguishing features to enhance model performance, which is confirmed in our later experiments in \underline{Section xxx}. The current visualization also raises a concern that models trained directly on such an embedding, or even on the original features if they indeed lack strong separability, might yield suboptimal classification performance. Should this be the case, further investigation into preserving more dimensions (balancing computational efficiency with information retention) or more targeted feature engineering/selection would be warranted.
 
-Moreover, this also indicates that if we just directly use the t-SNE embedding to perform future tasks, we may fail since we cannot separate the samples based on the embedding good enough.
 
 \subsection{Clustering analysis}
 
@@ -240,7 +236,7 @@ hippocampal region CA3. {\it Journal of Neuroscience} {\bf 15}(7):5249-5262.
     \item \textbf{Leyi WU}: 
     \item \textbf{Hua XU}: 
     \item \textbf{Jianhao RUAN}:
-    \item \textbf{AI}: Formatting latex tables and figures.
+    \item \textbf{AI}: Formatting latex tables and figures, polishing the report (while all every single argument is made by us; this can be referred to with GitHub commit history)
 
 \end{itemize}
 
