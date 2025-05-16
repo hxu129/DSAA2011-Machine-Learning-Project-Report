@@ -75,12 +75,17 @@
 
 \section{Introduction}
 
-\underline{don't forget to finish this part}
+The Adult Income dataset, a benchmark for binary classification, presents a common challenge in machine learning: predicting whether an individual's income exceeds \$50,000 per year based on a set of demographic and socio-economic features. This project undertakes a comprehensive analysis of this dataset, beginning with data preprocessing and exploratory visualization, followed by clustering analysis to uncover intrinsic data structures, and culminating in the development and evaluation of various classification models.
 
+Initial data exploration, including the application of t-SNE for dimensionality reduction and visualization, revealed the complex nature of the dataset. Key observations included the high dimensionality resulting from feature encoding, the apparent difficulty in separating the two income classes in a low-dimensional embedding, and the potential existence of sub-clusters within classes. Furthermore, visual inspection hinted at the presence of many redundant or less informative features, a hypothesis later corroborated by feature importance analysis from predictive models.
+
+The core of this study involves a systematic comparison of different machine learning techniques. Clustering analysis using K-means and agglomerative hierarchical clustering was performed to understand the data's natural groupings. While K-means produced geometrically well-defined clusters according to internal metrics, agglomerative clustering showed better alignment with ground truth labels, suggesting the true class distributions are complex and not ideally suited to K-means' assumptions. Subsequently, several classification models were evaluated, ranging from logistic regression and basic decision trees to more advanced ensemble methods like Random Forest and XGBoost.
+
+Our findings highlight that while simpler models provide baseline performance, ensemble methods, particularly XGBoost, achieve superior classification accuracy. XGBoost's ability to learn from errors and focus on the most pertinent features proved advantageous, aligning with the initial observation that only a few features are critical for this task. This report details the methodologies employed, presents the analytical results, and discusses the implications of these findings, including the impact of feature redundancy and class imbalance on model performance, ultimately identifying XGBoost as the most effective model for this dataset. Future work will explore strategies for feature engineering and addressing class imbalance to further enhance predictive accuracy.
 
 \section{Methods and results}
 
-\underline{add an introductory sentence here}
+This section details the sequential pipeline of our data analysis, commencing with data preprocessing, followed by exploratory data visualization, clustering analysis to uncover underlying groupings, and culminating in the training and evaluation of predictive classification models.
 
 \subsection{Data preprocessing}
 
@@ -249,10 +254,10 @@ hippocampal region CA3. {\it Journal of Neuroscience} {\bf 15}(7):5249-5262.
 
 \section*{Credit}
 \begin{itemize}
-    \item \textbf{Leyi WU}: 
     \item \textbf{Hua XU}: Draft all the report.
     \item \textbf{Jianhao RUAN}:
-    \item \textbf{AI}: Formatting latex tables and figures, polishing the report (while all every single argument is made by us; this can be referred to with GitHub commit history)
+    \item \textbf{Leyi WU}: 
+    \item \textbf{AI}: Formatting latex tables and figures, polishing the report (while all every single argument is made by us; this can be referred to with GitHub commit history), drafted the Introduction section
 
 \end{itemize}
 
