@@ -88,25 +88,31 @@
     \item \underline{observed patterns of dataset or insights}
 \end{itemize}
 
-The Adult Income datasets is a binary classification dataset with 14 usable variables, six of which are integer types while the rest eight variables are categorical. In this project, we are using different strategy to process the data.
+The Adult Income dataset, employed in this project, is structured for binary classification and comprises 14 usable variables. These variables include six of integer type and eight of categorical type. Specific preprocessing strategies were applied to handle these different data types:
 
 \begin{itemize}
-    \item As for the categorical variables, we firstly use the most frequent value to impute the missing values in the data, then we use one-hot encoding to convert the values into one-hot vectors. This step is implemented in Python with \texttt{OneHotEncoder} in scikit-learn.
-    \item As for the numeric variables, we use median values of the variables to replace the missing values, and after dealing with the missing values, we then normalize the data to $0$ mean and $1$ variance with \texttt{StandardScaler} in scikit-learn.
+    \item \textbf{Categorical Variables:} Missing values within the categorical features were imputed using the most frequent value observed for each respective feature. Subsequently, these categorical features were transformed into a numerical format using one-hot encoding, resulting in one-hot vectors for each category. This transformation was performed in Python utilizing the \texttt{OneHotEncoder} from the scikit-learn library.
+    \item \textbf{Numeric Variables:} For numeric features, missing values were replaced with the median value of the corresponding variable. Following imputation, these numeric features were standardized to have a mean of 0 and a variance of 1. This normalization was achieved using the \texttt{StandardScaler} from scikit-learn.
 \end{itemize}
 
-After imputing missing values and converting all features to numeric ones, we then get a wide dataframe with 105 features, making the computation costs high and taking much time in training and testing. For efficiency and visualization purposes, we then use t-SNE to reduce the dimensionality of the original data and get both the 2D and 3D embedding for future usages. Since then we would like to use 3D embedding for future usage since it can preserve more information based on the table.
+Upon completion of these preprocessing steps—imputing missing values and converting all features to a numeric representation—the dataset expanded to a dataframe with 105 features. This increased dimensionality makes the visualization even harder. To address this challenge, we apply t-SNE dimensionality reduction technique on the processed data, which will be discussed in \underline{Section xxx}.
+
+Moreover, as for the dataset itself, we may see that the number of samples not evenly fall into the two classes, as one class has \underline{xxxxxx} while the other one has \underline{xxxxxxxx}. This may cause troubles when training models, which will be discussed in \underline{Section xxx}.
+
+and facilitate effective visualization, t-SNE was employed as a dimensionality reduction technique. Both 2D and 3D embeddings of the data were generated. Based on an initial assessment [referencing your Table 1 which shows KL divergence], the 3D t-SNE embedding was selected for subsequent analyses due to its superior ability to preserve information compared to the 2D embedding.
+
 
 \input{assets/tab_tsne_performance}
 
-\underline{justify why we should use t-sne in 3D: comparing the time and performance}
 
 
 \subsection{Data visualization}
 
 \input{assets/fig_tsne}
 
-The t-SNE dimensionality reduction technique, known for its strength in preserving local similarities between data samples, was employed for initial data exploration through visualization. This visual analysis revealed several key characteristics of the dataset. Firstly, it highlighted the potential presence of multiple sub-clusters, even within the same ground truth class label. This observation suggests considerable diversity within classes, potentially indicating the existence of distinct sub-classes. Such granularity might necessitate fitting different predictive models to these identified sub-clusters should overall model performance prove unsatisfactory with a single global model.
+The t-SNE dimensionality reduction technique, known for its strength in preserving local similarities between data samples, was employed for initial data exploration through visualization. For better preserve the information within the original data, we are using different hyperparameter settings to perform the dimensionality reduction, and the results are illustrated in \underline{Table xxx}, through which we may see that the perplexity of \underline{value xxxx} can strike a balance between local and global properties, bringing us best visualization effects. And since the 2D and 3D may bring us different information, in the future we may use the two dimension setting at the same time.
+
+With the proper value of perplexity, we visualize the dataset in \underline{Figure xxx}. This visual analysis revealed several key characteristics of the dataset. Firstly, it highlighted the potential presence of multiple sub-clusters, even within the same ground truth class label. This observation suggests considerable diversity within classes, potentially indicating the existence of distinct sub-classes. Such granularity might necessitate fitting different predictive models to these identified sub-clusters should overall model performance prove unsatisfactory with a single global model.
 
 Secondly, and significantly, the t-SNE visualization indicated that samples from the two primary income classes ( $\le50K$ and $>50K$) are not clearly distinguishable, often co-occurring within the same visual clusters despite their different labels. Specifically, samples with income less than 50K appear broadly distributed across the visualization, whereas samples with income greater than 50K tend to concentrate on one side of the plot. This pattern suggests that the $\le50K$ class is more general and heterogeneous, encompassing a wider range of data distributions, compared to the more localized $>50K$ class.
 
@@ -125,10 +131,9 @@ Observations from the t-SNE visualization suggested inherent clustering characte
 
 \paragraph{K-means} K-means is a widely recognized partitional clustering algorithm that aims to partition N observations into K clusters. The algorithm operates iteratively through two main steps:
 
-\begin{enumerate}
-    \item \textbf{Assignment step:} Each data point xi from the dataset X is assigned to the cluster whose centroid $\mu_k$ is closest. This assignment is determined by the formula: $r_i = \underset{k\in \{1\ldots K\} }{\arg\min}{ \|x_{i}-\mu_k\| }$.
-    \item \textbf{Update step:} After all points are assigned to clusters, the centroid of each cluster is recalculated as the mean of all points assigned to it: $\mu_k = \frac{\sum_{i:r_i=k}^{} x_i}{\sum_{i:r_i=k}^{} 1}$. The quality of the initial centroid selection significantly impacts K-means performance. Therefore, the \textbf{k-means++} initialization technique was employed. This method selects the first centroid randomly from the data points. Subsequent centroids are chosen from the remaining data points with a probability proportional to their squared distance from the nearest existing centroid, repeating until $K$ centers are selected. This approach helps mitigate sensitivity to poor initializations and theoretically guarantees an $O(\log K)$-competitive solution. The K-means algorithm was implemented in Python using the \texttt{KMeans} class from the scikit-learn library.
-\end{enumerate}
+\subparagraph{Assignment step} Each data point xi from the dataset X is assigned to the cluster whose centroid $\mu_k$ is closest. This assignment is determined by the formula: $r_i = \underset{k\in \{1\ldots K\} }{\arg\min}{ \|x_{i}-\mu_k\| }$.
+
+\subparagraph{Update step} After all points are assigned to clusters, the centroid of each cluster is recalculated as the mean of all points assigned to it: $\mu_k = \frac{\sum_{i:r_i=k}^{} x_i}{\sum_{i:r_i=k}^{} 1}$. The quality of the initial centroid selection significantly impacts K-means performance. Therefore, the \textbf{k-means++} initialization technique was employed. This method selects the first centroid randomly from the data points. Subsequent centroids are chosen from the remaining data points with a probability proportional to their squared distance from the nearest existing centroid, repeating until $K$ centers are selected. This approach helps mitigate sensitivity to poor initializations and theoretically guarantees an $O(\log K)$-competitive solution. The K-means algorithm was implemented in Python using the \texttt{KMeans} class from the scikit-learn library.
 
 \paragraph{Agglomerative clustering} Agglomerative hierarchical clustering employs a bottom-up strategy, initially treating each data point as an individual cluster. It then iteratively merges the closest pairs of clusters until only a single cluster containing all data points remains, or a pre-specified number of clusters is reached. The method for measuring the distance between clusters is critical to its performance, and here we are using Ward's method, which aims to minimize the total within-cluster sum of squares, and the cost of merging two clusters, $A$ and $B$, can be expressed as: $\Delta(A, B)=\frac{2n_An_b}{n_A+n_B}\|\mu_A-\mu_B\|^2$ where $n_A, n_B$ represent the number of elements in cluster $A$ and $B$, respectively. This algorithm was implemented in Python using the \texttt{AgglomerativeClustering} in scikit-learn.
 
@@ -153,8 +158,7 @@ The observed diversity within one of the ground truth classes, particularly the 
 
 \subsubsection*{Methods}
 
-Based on the t-SNE visualization we may see that it is very hard to find a continuous line or surface to separate the samples from the two different classes apart. 
-Therefore, as for prediction, we would like to use decision tree based models and logistic regressions, as the decision tree based models may create discrete decision boundaries while logistic regression may bring us a simple decision boundary, making the classification precise.
+Based on the t-SNE visualization and clustering analysis, we may see that the data distribution is quite complicated and it might not be easy to find a simple, clear line or a plane in a hyperspace which can correct set the samples apart. Therefore, we think that simple logistic models may not be good enough to perform the classification task.  Therefore, as for prediction, we would like to use decision tree based models for better performance, since it can create a more complex decision space and boundary, and as for the logistic regression, we use this method in comparison of tree based methods.
 
 \paragraph{Logistic regression} Logistic regressions 123456.
 
@@ -164,19 +168,24 @@ Therefore, as for prediction, we would like to use decision tree based models an
 
 \input{assets/fig_vanilla_models}
 
+\underline{visualization of decision boundaries with different ways}
 
-After fitting the model with the train data, we then get the trained model and the corresponding decision boundary is also visualized in the \underline{figure}. From the figure we can see that the decision tree model is more expressive, as it can bring us multiple decision areas and decision boundaries while the logistic regression model cannot handle the complex data distribution and its decision boundary and the decision boundary just go cross some of the samples. 
+After fitting the model with the train data, we then get the trained model and the corresponding decision boundary is also visualized in the \underline{Figure}. However, since the model is fitted in high dimensional space, it is hard to visualize the decision boundary in 2D or 3D space. To do so, at first we just tried to iterate through all the data points in the t-SNE space and classify and colour them based on the prediction of our model, and the decision boundary we obtained is in \underline{Figure xxx}. However, t-SNE dimensionality reduction is an non-linear transformation which may twist the original decision boundary and we cannot get any useful information from it. Instead, we then tried to use these two methods:
 
+\begin{itemize}
+    \item PCA: We try to use PCA to visualize the decision boundary as it is a linear transformation. Although it cannot provide us details about whether the decision boundary is complex or not, it can tell us which principle component is most important in telling the classes apart. We firstly perform PCA analysis on the original dataset, then get the transformation matrices, which is later used to transform the decision boundary. The decision boundary is visualized in \underline{Figure xxxx} and we can see, that both logistic regression and decision model tells the samples apart based on information in the feature \underline{A, B, C}. 
+    \item \underline{search for more methods to visualize the decision boundaried}
+    \item %Directly reducing data: \underline{After fitting the decision tree model / performing the PCA analysis}, we can see the importance of the feature \underline{A, B, C} and therefore, visualizing the decision boundary in the 3D space constructed with \underline{A, B, C } can somehow reflect the complexity of our model's decision boundaries while not make any 扭曲 of the original decison boundary. Then the decision boundary is visualized in \underline{Figure xxx}. From this 
+\end{itemize}
 
-This intuition implied by the visualization is also supported by the metrics. From the table \underline{below} we can see that as for the overall performance. 
+From the figure we can see that the decision tree model is more expressive, as it can bring us multiple decision areas and decision boundaries while the logistic regression model cannot handle the complex data distribution and its decision boundary and the decision boundary just go cross some of the samples. 
 
-\underline{interpretion of results}
-
+This intuition implied by the visualization is also supported by the metrics. From \underline{Figure xxxx} we can see that for decision tree model, it can achieve better performance in terms of accuracy and f1 scores. 
 
 However, it is quite clear that the performance is still not amazingly great, as the accuracy is just around \underline{1234} which is far below the legend of tree based models. Since we think the power of tree models is from its ability to create flexible decision areas, we think that adding the depth of the trees or increasing the number of trees in the process of fitting may be a good idea. We then increase the depth of a single decision tree to \underline{1245} and did more experiments,
 while we used the ensemble models to do more experiments. Their decision boundary are visualized in \underline{figure xxx} and the performance metrics are in \underline{table xxx}. Based on the results above, we may see that the ability of classification does increase as the tree goes deeper, 
 \underline{(but as the tree goes too deep, the performance on the test set will decrease as the model start to overfit)}. 
-And for the decision boundaries, we can see that the two models can bring us more complex but robust decision boundaries.
+And for the decision boundaries, we can see that the two models can bring us more complex decision boundaries, making the prediction more precise. 
 
 \input{assets/fig_ensemble_models}
 
@@ -192,26 +201,16 @@ Meanwhile, the performance on one class is significantly worse than another clas
 
 \input{assets/fig_model_selection}
 
+In this task, our goal for selecting models is to find a 
+
 After fitting the models, we can select the model to use by analyzing their performance. The classification results are illustrated in \underline{table xxxxxxx} and based on that, we can calculate the ROC and AUC in \underline{fig xxx}. It shows that model \underline{xxxx} has the greatest AUC and it can balance well on the data
 
 
 \section{Conclusion}
 
-In this project, we try to explore the intrinsic characteristics of the Adult Income dataset and try to perform classification tasks with different models on it. Through our analysis, we find that the dataset contains a lot of redundant features which do not help the task too much but still will be involved in the classification process, making the costs big and the performance bad. Only a few features matter. For better time efficiency, we firstly perform dimensionality reduction
-with t-SNE and found that the classes are hard to separate and there are some sub-clusters in the dataset. 
-
-\underline{then we visualized the dataset with clustering methods}
-
-Then we start to perform classification task on it. For the complex data distribution, logistic regression perform badly on the dataset as it cannot create flexible decision boundary. Tree based models performs good on the dataset, as the performance will increase as the trees get deeper. Ensemble models is the king on this task, among those the XGBoost is the good good winner, as which can learn from its failures and find the most important feature. However, the model still suffer from the
-imbalanced distribution of the two labels and in the future, more advanced techniques should be applied for better performance.
+In this project, we try to explore the intrinsic characteristics of the Adult Income dataset and try to perform classification tasks with different models on it. Through our analysis, we find that the dataset contains a lot of redundant features which do not help the task too much but still will be involved in the classification process, making the costs big and the performance bad. Only a few features matter. With this observation, we then visualized the dataset with clustering methods, and through our analysis of the clustering methods, we have confirmed our hypothesis that the distribution of the data might be complex, so as the decision boundary. For better performance, we use decision tree since it can create complex decision boundary and we use logistic regression in contrast. While the performance of the models does meet our expectation, it is not yet good enough. Then we start to create more complex decision boundaries with deeper decision trees and more complicated ensemble models. The results shows that as the trees get deeper, its decision boundary will also get deeper, making the classification good while too deep trees may overfit on the training set. As for the ensemble models, both of them can fit well on the given data, while XGBoost can learn from its errors and learn the most important features. Since it has the lowest \underline{AUC} value, it can balance well between recall and precision, making it suitable for performing classification on this dataset. In the future, more experiments need to be done to achieve better classification performance, including doing better feature engineering, dealing with imbalanced data. More experiments with different random seeds are also needed to validate the discoveries about the depth of decision trees, the complexity of decision boundaries and so on.
 
 \underline{we may need to find one or two papers to support our conclusion that only the specific feature is important on the dataset}
-
-
-
-
-
-\label{conclusion}
 
 \section*{References}
 {
@@ -237,7 +236,7 @@ hippocampal region CA3. {\it Journal of Neuroscience} {\bf 15}(7):5249-5262.
 \section*{Credit}
 \begin{itemize}
     \item \textbf{Leyi WU}: 
-    \item \textbf{Hua XU}: 
+    \item \textbf{Hua XU}: Draft all the report.
     \item \textbf{Jianhao RUAN}:
     \item \textbf{AI}: Formatting latex tables and figures, polishing the report (while all every single argument is made by us; this can be referred to with GitHub commit history)
 
